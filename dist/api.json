@@ -1,0 +1,134 @@
+{
+  "package": "@arki/mcp",
+  "version": "0.1.0",
+  "entries": [
+    {
+      "subpath": ".",
+      "name": "Access",
+      "kind": "type",
+      "signature": "export type Access = 'public' | 'user' | { roles?: readonly string[]; scopes?: readonly string[]; };",
+      "jsdocSummary": "Who may see and call a primitive. Checked at call time and again for `tools/list`."
+    },
+    {
+      "subpath": ".",
+      "name": "Effect",
+      "kind": "type",
+      "signature": "export type Effect = 'read' | 'write' | 'destructive';",
+      "jsdocSummary": "What a tool does to the world. Maps to the MCP annotations `readOnlyHint` and `destructiveHint`; `destructive` requires a confirmation."
+    },
+    {
+      "subpath": ".",
+      "name": "McpTool",
+      "kind": "type",
+      "signature": "export type McpTool<Input, Output, Failures extends Failure> = { readonly name: string; readonly description: string; readonly meta: McpMeta; readonly input: AnySchema | undefined; readonly output: AnySchema | undefined; readonly errorMap: ErrorMap; readonly annotations: ToolAnnotations; readonly run: (input: Input, call: ToolCall) => Promise<Output | Failures>; readonly invoke: (input: Input, call: ToolCall) => Promise<CallToolResult>; };",
+      "jsdocSummary": "Executable projection of one explicitly exposed procedure."
+    },
+    {
+      "subpath": ".",
+      "name": "ToolCall",
+      "kind": "type",
+      "signature": "export type ToolCall = { readonly principal: AnyPrincipal | null; readonly signal: AbortSignal; readonly budget: { readonly maxChars: number; }; /** Granted delegated scopes, populated by the application's principal mapper. */ readonly scopes?: readonly string[]; /** Approval authority belongs to the host; absence or refusal fails closed. */ readonly approve?: (request: { readonly name: string; readonly input: unknown; readonly principal: AnyPrincipal | null; readonly signal: AbortSignal; }) => boolean | Promise<boolean>; };",
+      "jsdocSummary": "Trusted request context. None of these fields comes from tool arguments."
+    },
+    {
+      "subpath": ".",
+      "name": "ToolName",
+      "kind": "type",
+      "signature": "export type ToolName = `${Lowercase<string>}_${string}`;",
+      "jsdocSummary": "A public tool name: `<feature>_<name>`, lower-case prefix. The key type of every tool registry."
+    },
+    {
+      "subpath": "./contract",
+      "name": "asTool",
+      "kind": "function",
+      "signature": "export declare function asTool<I extends AnySchema, O extends AnySchema, E extends ErrorMap, Mt extends Meta, const M extends McpMeta & { remediation?: { readonly [K in keyof E as K & string]?: string; }; }>(procedure: ContractProcedure<I, O, E, Mt>, mcp: M & { remediation?: Record<Exclude<keyof NonNullable<M['remediation']>, keyof E>, never>; }): ContractProcedure<I, O, E, Mt & { readonly mcp: M; }>;",
+      "jsdocSummary": "Copy the contract definition, retaining its schemas, errors and existing policy metadata."
+    },
+    {
+      "subpath": "./contract",
+      "name": "McpMeta",
+      "kind": "type",
+      "signature": "export type McpMeta = { readonly description: string; /** Listing policy; the procedure's middleware still authorizes the call. */ readonly access: Access; readonly name?: ToolName; readonly idempotent?: boolean; readonly openWorld?: boolean; readonly budget?: { readonly maxChars: number; }; /** What the model should do next for a declared contract error. */ readonly remediation?: Readonly<Record<string, string>>; /** Declared for inspection, never served. */ readonly hidden?: true; } & ({ readonly effect: Exclude<Effect, 'destructive'>; } | { readonly effect: 'destructive'; readonly confirm: 'elicit' | { readonly none: string; }; });",
+      "jsdocSummary": "Model-facing policy attached to an explicitly exposed contract procedure."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "ADAPTER_FAILURES",
+      "kind": "variable",
+      "signature": "export declare const ADAPTER_FAILURES: readonly [import(\"@arki/failure\").FailureDefinition<\"mcp.forbidden\", undefined>, import(\"@arki/failure\").FailureDefinition<\"mcp.approval_required\", undefined>, import(\"@arki/failure\").FailureDefinition<\"mcp.invalid_input\", undefined>, import(\"@arki/failure\").FailureDefinition<\"mcp.cancelled\", undefined>, import(\"@arki/failure\").FailureDefinition<\"failure.unexpected_defect\", undefined>];",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./orpc",
+      "name": "ApprovalRequired",
+      "kind": "variable",
+      "signature": "export declare const ApprovalRequired: import(\"@arki/failure\").FailureDefinition<\"mcp.approval_required\", undefined>;",
+      "jsdocSummary": "Approval absent."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "Cancelled",
+      "kind": "variable",
+      "signature": "export declare const Cancelled: import(\"@arki/failure\").FailureDefinition<\"mcp.cancelled\", undefined>;",
+      "jsdocSummary": "Invocation cancelled."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "Forbidden",
+      "kind": "variable",
+      "signature": "export declare const Forbidden: import(\"@arki/failure\").FailureDefinition<\"mcp.forbidden\", undefined>;",
+      "jsdocSummary": "Access refused."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "fromRpc",
+      "kind": "function",
+      "signature": "export declare function fromRpc<const Feature extends string, C extends AnyContractRouter>(entry: { readonly feature: Feature; readonly contract: C; readonly router: unknown; } & CanonicalErrorsGuard<NoInfer<C>>, options: Options<NoInfer<C>> & { readonly prefix?: undefined; }): RpcTools<Feature, C>; ; export declare function fromRpc<const Prefix extends string, C extends AnyContractRouter>(entry: { readonly feature: string; readonly contract: C; readonly router: unknown; } & CanonicalErrorsGuard<NoInfer<C>>, options: Options<NoInfer<C>> & { readonly prefix: Prefix; }): RpcTools<Prefix, C>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./orpc",
+      "name": "InvalidInput",
+      "kind": "variable",
+      "signature": "export declare const InvalidInput: import(\"@arki/failure\").FailureDefinition<\"mcp.invalid_input\", undefined>;",
+      "jsdocSummary": "Native input validation refused the call."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "InvalidResult",
+      "kind": "variable",
+      "signature": "export declare const InvalidResult: import(\"@arki/failure\").FailureDefinition<\"mcp.internal\", undefined>;",
+      "jsdocSummary": "Response is not JSON."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "ResultTooLarge",
+      "kind": "variable",
+      "signature": "export declare const ResultTooLarge: import(\"@arki/failure\").FailureDefinition<\"mcp.result_too_large\", undefined>;",
+      "jsdocSummary": "Response exceeds its budget."
+    },
+    {
+      "subpath": "./orpc",
+      "name": "RpcTools",
+      "kind": "type",
+      "signature": "export type RpcTools<Prefix extends string, Contract extends object> = Intersect<{ [Key in keyof Contract & string]: LeafTools<Prefix, Key, Contract[Key]>; }[keyof Contract & string]>;",
+      "jsdocSummary": ""
+    },
+    {
+      "subpath": "./orpc",
+      "name": "Snake",
+      "kind": "type",
+      "signature": "export type Snake<Name extends string> = Name extends `${infer First}${infer Rest}` ? `${First extends Lowercase<First> ? First : `_${Lowercase<First>}`}${Snake<Rest>}` : '';",
+      "jsdocSummary": ""
+    }
+  ],
+  "groups": [],
+  "errorCodes": [
+    "mcp.approval_required",
+    "mcp.cancelled",
+    "mcp.forbidden",
+    "mcp.internal",
+    "mcp.invalid_input",
+    "mcp.result_too_large"
+  ]
+}

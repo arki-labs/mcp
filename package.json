@@ -1,0 +1,76 @@
+{
+  "name": "@arki/mcp",
+  "version": "0.1.0",
+  "description": "MCP servers and MCP Apps for ARKI — tools from oRPC procedures with their middleware intact, typed access, confirmations, a test client and the Dot mcpServer() plugin.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arki-labs/arki.git"
+  },
+  "homepage": "https://arki.dev",
+  "bugs": {
+    "url": "https://github.com/arki-labs/arki/issues"
+  },
+  "keywords": [
+    "arki",
+    "typescript",
+    "mcp",
+    "model-context-protocol",
+    "orpc",
+    "dot"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./contract": {
+      "types": "./dist/contract.d.ts",
+      "import": "./dist/contract.js",
+      "default": "./dist/contract.js"
+    },
+    "./orpc": {
+      "types": "./dist/orpc.d.ts",
+      "import": "./dist/orpc.js",
+      "default": "./dist/orpc.js"
+    }
+  },
+  "files": [
+    "dist/**",
+    "src/**",
+    "!src/**/*.test.*",
+    "!src/**/*.spec.*",
+    "!src/**/tests/**",
+    "!src/**/test/**",
+    "!src/**/__tests__/**",
+    "docs/**",
+    "README.md",
+    "llms.txt",
+    "LICENSE",
+    "package.json"
+  ],
+  "dependencies": {
+    "@arki/auth": "0.4.0",
+    "@arki/failure": "0.3.0",
+    "@arki/log": "0.4.0",
+    "@arki/schema": "0.3.0",
+    "@modelcontextprotocol/server": "^2.3.1",
+    "@orpc/client": "^1.15.5",
+    "@orpc/contract": "^1.15.5",
+    "zod": "4.6.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "arki": {
+    "runtimes": [
+      "node",
+      "bun",
+      "deno"
+    ]
+  }
+}

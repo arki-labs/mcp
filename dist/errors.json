@@ -1,0 +1,56 @@
+[
+  {
+    "code": "mcp.approval_required",
+    "package": "@arki/mcp",
+    "kind": "failure",
+    "what": "Approval absent.",
+    "fix": "Verify approval through the host authority.",
+    "verify": "bun run test -- src/orpc.test.ts",
+    "source": "src/orpc.ts:30"
+  },
+  {
+    "code": "mcp.cancelled",
+    "package": "@arki/mcp",
+    "kind": "failure",
+    "what": "Invocation cancelled.",
+    "fix": "Start a new invocation when still needed.",
+    "verify": "bun run test -- src/orpc.test.ts",
+    "source": "src/orpc.ts:42"
+  },
+  {
+    "code": "mcp.forbidden",
+    "package": "@arki/mcp",
+    "kind": "failure",
+    "what": "Access refused.",
+    "fix": "Supply the required principal, roles and scopes.",
+    "verify": "bun run test -- src/orpc.test.ts",
+    "source": "src/orpc.ts:24"
+  },
+  {
+    "code": "mcp.internal",
+    "package": "@arki/mcp",
+    "kind": "failure",
+    "what": "Response is not JSON.",
+    "fix": "Return a serializable contract output.",
+    "verify": "bun run test -- src/orpc.test.ts",
+    "source": "src/result.ts:13"
+  },
+  {
+    "code": "mcp.invalid_input",
+    "package": "@arki/mcp",
+    "kind": "failure",
+    "what": "Native input validation refused the call.",
+    "fix": "Correct the tool arguments.",
+    "verify": "bun run test -- src/orpc.test.ts",
+    "source": "src/orpc.ts:36"
+  },
+  {
+    "code": "mcp.result_too_large",
+    "package": "@arki/mcp",
+    "kind": "failure",
+    "what": "Response exceeds its budget.",
+    "fix": "Request a smaller page.",
+    "verify": "bun run test -- src/orpc.test.ts",
+    "source": "src/result.ts:7"
+  }
+]
