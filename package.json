@@ -1,6 +1,6 @@
 {
   "name": "@arki/mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP servers and MCP Apps for ARKI — tools from oRPC procedures with their middleware intact, typed access, confirmations, a test client and the Dot mcpServer() plugin.",
   "license": "MIT",
   "repository": {
@@ -54,10 +54,10 @@
     "package.json"
   ],
   "dependencies": {
-    "@arki/auth": "0.4.0",
-    "@arki/failure": "0.3.0",
-    "@arki/log": "0.4.0",
-    "@arki/schema": "0.3.0",
+    "@arki/auth": "0.6.0",
+    "@arki/failure": "0.4.0",
+    "@arki/log": "0.4.1",
+    "@arki/schema": "0.3.1",
     "@modelcontextprotocol/server": "^2.3.1",
     "@orpc/client": "^1.15.5",
     "@orpc/contract": "^1.15.5",
